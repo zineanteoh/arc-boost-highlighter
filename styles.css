@@ -1,0 +1,48 @@
+/* This is injected after a web page loads */
+
+/* 
+custom interface contains everything. 
+it is the parent component of most almost all elements created 
+in this extension 
+*/
+
+/* the style of the highlighted text */
+.highlighted {
+	background-color: yellow;
+	display: inline;
+}
+
+.customInterface {
+	/* reset css */
+	box-sizing: border-box;
+	/* visuals */
+	width: 220px;
+	/* height: 100px; */
+	position: fixed;
+	z-index: 1000000;
+	right: 0;
+	top: 0;
+	padding-left: 20px;
+	/* colors */
+	background-color: rgba(255, 255, 255, 0.3);
+	/* behavior */
+	pointer-events: none; /* allow mouse click through div */
+}
+
+.customTitle {
+	font-size: 16px;
+}
+
+.customDesc {
+	font-size: 12px;
+}
+
+.toggleButton {
+	/* behavior */
+	pointer-events: all;
+}
+
+.toggleButtonOn {
+	background-color: rgb(167, 255, 95);
+}
+
