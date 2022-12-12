@@ -6,9 +6,13 @@ it is the parent component of most almost all elements created
 in this extension 
 */
 
+html {
+	--customHighlighterColor: #c2f4fd;
+}
+
 /* the style of the highlighted text */
 .highlighted {
-	background: -webkit-linear-gradient(rgba(245,202,191,0) 30%,rgb(194, 244, 253) 31%);
+	background: -webkit-linear-gradient(#f5cabf00 30%,var(--customHighlighterColor) 31%);
 	display: inline;
 }
 
@@ -17,7 +21,7 @@ in this extension
 	box-sizing: border-box;
 	/* visuals */
 	width: 220px;
-	height: 100px;
+	/* height: 100px; */
 	position: fixed;
 	z-index: 1000000;
 	right: 0;
@@ -37,11 +41,11 @@ in this extension
 	font-size: 12px;
 }
 
-.toggleButton {
+.clickable {
+	/* visuals */
+	margin-left: 5px;
+	margin-right: 5px;
+
 	/* behavior */
 	pointer-events: all;
-}
-
-.toggleButtonOn {
-	background-color: rgb(167, 255, 95);
 }

@@ -10,7 +10,7 @@ let highlightedTexts = [];
 /* ---------------------- Main Logic ---------------------- */
 const interface = createInterface();
 const title = addTitle(interface);
-const toggle = addToggleButton(interface, title);
+const colorPicker = addComponents(interface, title);
 const desc = addDesc(interface);
 
 /* ---------------------- Event listeners ---------------------- */
@@ -30,14 +30,12 @@ document.onmouseup = (event) => {
   const targ = event.target;
   if (!interface.contains(targ)) {
     if (isExtensionOn) {
+      // get selected text and perform action! 
       const selection = window.getSelection();
-
-      // TODO Storing the text for when I extend the functionality
       currentText = selection.toString();
       if (currentText.length == 0) {
         desc.innerText = "nothing to highlight";
       } else {
-        // TODO change the style of the highlighted text
         highlightSelection(selection);
         highlightedTexts.push(currentText);
         console.log("List of highlighted texts: ", highlightedTexts);
@@ -49,11 +47,18 @@ document.onmouseup = (event) => {
   }
 }
 
+colorPicker.onchange = (event) => {
+  console.log("Changing color to: ", event.target.value);
+  document.getElementsByTagName('html')[0].style.setProperty('--customHighlighterColor', event.target.value);
+}
+
 
 /* ---------------------- DOM functions ---------------------- */
 /* These functions only run once! */
 
-// create & return an interface window
+/**
+ * create & return an interface window
+ */
 function createInterface() {
   // create a blank div
   const customInterface = document.createElement("div");
@@ -65,7 +70,9 @@ function createInterface() {
   return customInterface;
 }
 
-// create the "Arc Highlighter: ON/OFF" element & add to interface
+/**
+ * create the "Arc Highlighter: ON/OFF" element & add to interface
+ */
 function addTitle(interface) {
   // create a title
   const title = document.createElement("p");
@@ -76,7 +83,9 @@ function addTitle(interface) {
   return title;
 }
 
-// create a description element & add to interface
+/**
+ * create a description element & add to interface
+ */
 function addDesc(interface) {
   // create a description
   const desc = document.createElement("p");
@@ -87,16 +96,26 @@ function addDesc(interface) {
   return desc;
 }
 
-// create a toggle on/off button & add to interface
-// ... toggle will affect all elements passed in as parameters
-function addToggleButton(interface, title) {
+/**
+ * addComponents(interface, title)
+ * 
+ * add the toggle on/off button and color picker to interface
+ * and update the title innerText status
+ */
+function addComponents(interface, title) {
   // create a button
-  const button = document.createElement("button");
-  button.innerText = "Toggle"
-  button.className = "toggleButton";
+  const toggleButton = document.createElement("button");
+  toggleButton.innerText = "Toggle"
+  toggleButton.className = "clickable";
+
+  // create a color picker
+  const colorPicker = document.createElement("input");
+  colorPicker.type = "color";
+  colorPicker.value = "#c2f4fd";
+  colorPicker.className = "clickable";
 
   // toggle ON/OFF
-  button.onclick = () => {
+  toggleButton.onclick = () => {
     isExtensionOn = !isExtensionOn;
     title.innerText = "Arc Highlighter: " + (isExtensionOn ? "ON ✅" : "OFF ❌");
     if (!isExtensionOn) {
@@ -106,12 +125,16 @@ function addToggleButton(interface, title) {
     }
   }
 
-  interface.appendChild(button);
+  interface.appendChild(toggleButton);
+  interface.appendChild(colorPicker);
 
-  return button;
+  return colorPicker;
 }
 
 /* ---------------------- Helper functions ---------------------- */
+/**
+ * Highlights the selection by creating a replacement node
+ */
 function highlightSelection(selectionObject) {
   console.log("---------HIGHLIGHTED-------------");
   console.log("Website: " + selectionObject.anchorNode.baseURI);
@@ -125,9 +148,6 @@ function highlightSelection(selectionObject) {
   if (start.nodeName == "#text" && end.nodeName == "#text") {
     console.log("Start Node: ", start.parentNode);
     console.log("End Node: ", end.parentNode);
-
-    let nodes = getNodesBetween(start.parentNode, end.parentNode);
-    console.log("These are the selected nodes: ", nodes);
 
     /**
      * intended result: 
@@ -145,26 +165,4 @@ function highlightSelection(selectionObject) {
   }
   console.log("---------------------------------");
 }
-
-function getNodesBetween(startNode, endNode) {
-  let nodes = [];
-  const startNodeAncestor = startNode.parentNode;
-  const endNodeAncestor = endNode.parentNode;
-  const hasCommonAncestor = startNodeAncestor == endNodeAncestor;
-  if (hasCommonAncestor) {
-    const ancestor = startNodeAncestor;
-    console.log("Ancestor: ", ancestor);
-    // iterate from startNode to endNode
-    const startIndex = Array.from(ancestor.children).indexOf(startNode);
-    const endIndex = Array.from(ancestor.children).indexOf(endNode);
-    // console.log("Looping from ", startIndex, " to ", endIndex);
-    for (let i = startIndex; i <= endIndex; ++i) {
-      nodes.push(ancestor.children[i]);
-    }
-  } else {
-    console.log("No common ancestors..! Try highlight in smaller pieces");
-  }
-  return nodes;
-}
-
 
