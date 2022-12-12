@@ -208,4 +208,3 @@ function getNodesBetween(startNode, endNode) {
   return nodes;
 }
 
-
