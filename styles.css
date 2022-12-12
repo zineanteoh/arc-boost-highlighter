@@ -20,21 +20,30 @@ html {
 	/* reset css */
 	box-sizing: border-box;
 	/* visuals */
-	width: 220px;
-	/* height: 100px; */
+	display: flex;
+	flex-direction: column;
+	width: 20vw;
+	height: 15vh;
 	position: fixed;
 	z-index: 1000000;
 	right: 0;
-	top: 0;
-	padding-left: 20px;
+	bottom: 0;
+	padding-left: 2%;
+	padding-right: 2%;
+	border-radius: 10px;
+	margin-bottom: 1.5%;
+	margin-right: 1.5%;
+	justify-content: center;
+	align-items: center;
 	/* colors */
-	background-color: rgba(255, 255, 255, 0.3);
+	background-color: var(--arc-background-simple-color);
 	/* behavior */
 	pointer-events: none; /* allow mouse click through div */
 }
 
 .customTitle {
-	font-size: 16px;
+	color: var(--arc-palette-backgroundExtra);
+	font-size: 1.4em;
 }
 
 .customDesc {
@@ -49,3 +58,11 @@ html {
 	/* behavior */
 	pointer-events: all;
 }
+
+.customToggle {
+	padding: 0.4em 1em;
+}
+
+
+
+

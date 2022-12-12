@@ -90,7 +90,7 @@ function addDesc(interface) {
   // create a description
   const desc = document.createElement("p");
   desc.className = "customDesc";
-  desc.innerText = isExtensionOn ? "<no text>" : "";
+  desc.innerText = "";
   interface.appendChild(desc);
 
   return desc;
@@ -106,27 +106,27 @@ function addComponents(interface, title) {
   // create a button
   const toggleButton = document.createElement("button");
   toggleButton.innerText = "Toggle"
-  toggleButton.className = "clickable";
+  toggleButton.className = "clickable customToggle";
 
   // create a color picker
   const colorPicker = document.createElement("input");
   colorPicker.type = "color";
   colorPicker.value = "#c2f4fd";
-  colorPicker.className = "clickable";
+  colorPicker.className = "clickable customColorPicker";
 
   // toggle ON/OFF
   toggleButton.onclick = () => {
     isExtensionOn = !isExtensionOn;
     title.innerText = "Arc Highlighter: " + (isExtensionOn ? "ON ✅" : "OFF ❌");
-    if (!isExtensionOn) {
-      desc.innerText = "<no text>";
-    } else {
-      desc.innerText = "";
-    }
+    desc.innerText = " ";
   }
 
-  interface.appendChild(toggleButton);
-  interface.appendChild(colorPicker);
+  // create a container holding both button and color picker
+  const div = document.createElement("div");
+  div.appendChild(toggleButton);
+  div.appendChild(colorPicker);
+
+  interface.appendChild(div);
 
   return colorPicker;
 }
