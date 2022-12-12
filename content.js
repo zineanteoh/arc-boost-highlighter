@@ -49,6 +49,7 @@ document.onmouseup = (event) => {
   }
 }
 
+
 /* ---------------------- DOM functions ---------------------- */
 /* These functions only run once! */
 
@@ -128,60 +129,18 @@ function highlightSelection(selectionObject) {
     let nodes = getNodesBetween(start.parentNode, end.parentNode);
     console.log("These are the selected nodes: ", nodes);
 
-    // iterate through the nodes and create replacement node 
-    if (nodes.length == 1) {
-      /**
-       * only one node is selected
-       * intended result: 
-       * before: 
-       *    <p>Lorem ipsum dolor sit amet, consectetur</p>
-       * after: 
-       *    <p>Lorem <div className="highlighted">ipsum</div> dolor sit amet, consectetur</p>
-      */
-      const replacement = document.createElement("div");
-      replacement.innerText = selectionObject.toString();
-      replacement.classList.add("highlighted");
-      selectionRange.deleteContents();
-      selectionRange.insertNode(replacement);
-    } else {
-      /** 
-       * multiple nodes selected
-       * intended result: 
-       * before: 
-       *    <p>Sentence one</p>
-       *    <p>Sentence two</p>
-       *    <p>Sentence three</p>
-       *    <p>Sentence four</p>
-       * afer: 
-       *    <p>Sentence <div class="highlighted">one</div></p>
-       *    <div class="highlighted">Sentence two</div>
-       *    <div class="highlighted">Sentence three</div>
-       *    <p><div class="highlighted">Sentence</div> four</p>
-      */
-      // TODO : fix this
-      // nodes.forEach((n, index) => {
-      //   const replacement = document.createElement("div");
-      //   if (index == 0) {
-      //     console.log("This is range: ", selectionRange);
-      //     // let startOffset = selectionRange.startOffset;
-      //     // replacement.innerText = replacement.innerText.substr(startOffset);
-      //     // console.log("first node text: ", replacement.innerText);
-      //   } else if (index == nodes.length - 1) {
-      //     console.log("This is range: ", selectionRange);
-      //     // let endOffset = selectionRange.endOffset;
-      //     // replacement.innerText = replacement.innerText.substr(0, endOffset);
-      //     // console.log("last node text: ", replacement.innerText);
-      //   } else {
-      //     replacement.innerText = n.innerText;
-      //   }
-      //   replacement.classList.add("highlighted");
-      //   console.log("inserting: ", replacement);
-      //   selectionRange.insertNode(replacement);
-      // })
-      // selectionRange.deleteContents();
-    }
-
-    // explicitly remove selection
+    /**
+     * intended result: 
+     * before: 
+     *    <p>Lorem ipsum dolor sit amet, consectetur</p>
+     * after: 
+     *    <p>Lorem <div className="highlighted">ipsum</div> dolor sit amet, consectetur</p>
+    */
+    const replacement = document.createElement("div");
+    replacement.innerText = selectionObject.toString();
+    replacement.classList.add("highlighted");
+    selectionRange.deleteContents();
+    selectionRange.insertNode(replacement);
     window.getSelection().empty();
   }
   console.log("---------------------------------");
@@ -207,4 +166,5 @@ function getNodesBetween(startNode, endNode) {
   }
   return nodes;
 }
+
 
